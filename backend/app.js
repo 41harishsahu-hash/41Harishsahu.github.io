@@ -49,7 +49,15 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }
 
-// Health Check API
+// Root & Health Check APIs
+app.get('/', (req, res) => {
+  res.json({
+    status: 'online',
+    message: 'History Packers & Movers Backend API is running.',
+    healthCheck: '/api/health',
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'healthy',
