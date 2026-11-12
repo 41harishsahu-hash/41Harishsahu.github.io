@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E2EDF8" />
+      <stop offset="45%" stop-color="#EFF5FA" />
+      <stop offset="100%" stop-color="#F8FAFC" />
+    </linearGradient>
+    <linearGradient id="roadGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#1E293B" />
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F28C28" />
+      <stop offset="100%" stop-color="#D97718" />
+    </linearGradient>
+    <linearGradient id="truckBody" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F1F5F9" />
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Crisp Daylight Sky Background -->
+  <rect width="1920" height="1080" fill="url(#bgGrad1)" />
+
+  <!-- Clean Distant City Architecture -->
+  <g opacity="0.18" fill="#64748B">
+    <rect x="1400" y="320" width="120" height="480" rx="4" />
+    <rect x="1540" y="220" width="160" height="580" rx="4" />
+    <rect x="1720" y="360" width="110" height="440" rx="4" />
+    <rect x="1260" y="440" width="110" height="360" rx="4" />
+    <polygon points="1200,800 1350,560 1450,800" />
+  </g>
+
+  <!-- Highway / Ground -->
+  <path d="M0,800 L1920,800 L1920,1080 L0,1080 Z" fill="url(#roadGrad)" />
+  <line x1="0" y1="940" x2="1920" y2="940" stroke="#F28C28" stroke-width="8" stroke-dasharray="60,40" opacity="0.8" />
+
+  <!-- Moving Logistics Truck Illustration -->
+  <g transform="translate(1080, 520)" filter="url(#shadow)">
+    <!-- Wheels -->
+    <circle cx="120" cy="300" r="48" fill="#0F172A" />
+    <circle cx="120" cy="300" r="24" fill="#94A3B8" />
+    <circle cx="210" cy="300" r="48" fill="#0F172A" />
+    <circle cx="210" cy="300" r="24" fill="#94A3B8" />
+    <circle cx="560" cy="300" r="48" fill="#0F172A" />
+    <circle cx="560" cy="300" r="24" fill="#94A3B8" />
+
+    <!-- Container Body with crisp subtle stroke -->
+    <rect x="60" y="40" width="460" height="240" rx="10" fill="url(#truckBody)" stroke="#CBD5E1" stroke-width="2" />
+    <!-- Brand Stripe -->
+    <rect x="60" y="140" width="460" height="40" fill="url(#orangeGrad)" />
+    <!-- Container Grooves -->
+    <line x1="150" y1="40" x2="150" y2="280" stroke="#E2E8F0" stroke-width="3" />
+    <line x1="250" y1="40" x2="250" y2="280" stroke="#E2E8F0" stroke-width="3" />
+    <line x1="350" y1="40" x2="350" y2="280" stroke="#E2E8F0" stroke-width="3" />
+    <line x1="450" y1="40" x2="450" y2="280" stroke="#E2E8F0" stroke-width="3" />
+
+    <!-- History Packers & Movers Text Badge on Truck -->
+    <text x="290" y="110" font-family="'Inter', sans-serif" font-weight="900" font-size="28" fill="#17365D" text-anchor="middle" letter-spacing="2">HISTORY PACKERS</text>
+    <text x="290" y="168" font-family="'Inter', sans-serif" font-weight="800" font-size="20" fill="#FFFFFF" text-anchor="middle" letter-spacing="3">SAFE FAST RELIABLE</text>
+
+    <!-- Cabin -->
+    <path d="M520,120 L580,120 L640,190 L650,280 L520,280 Z" fill="#17365D" />
+    <!-- Windshield -->
+    <path d="M540,135 L575,135 L625,190 L540,190 Z" fill="#38BDF8" opacity="0.85" />
+    <!-- Headlight -->
+    <rect x="640" y="240" width="16" height="22" rx="4" fill="#FDE047" />
+  </g>
+
+  <!-- Moving Boxes & Cargo Cargo Stack Illustration -->
+  <g transform="translate(860, 640)" filter="url(#shadow)">
+    <!-- Box 1 -->
+    <rect x="0" y="60" width="110" height="100" rx="4" fill="#D97706" />
+    <rect x="45" y="60" width="20" height="100" fill="#B45309" />
+    <line x1="15" y1="75" x2="95" y2="75" stroke="#FDE68A" stroke-width="2" />
+    <text x="55" y="115" font-family="sans-serif" font-weight="bold" font-size="14" fill="#78350F" text-anchor="middle">FRAGILE</text>
+
+    <!-- Box 2 -->
+    <rect x="90" y="40" width="130" height="120" rx="4" fill="#F59E0B" />
+    <rect x="145" y="40" width="20" height="120" fill="#D97706" />
+    <text x="155" y="105" font-family="sans-serif" font-weight="bold" font-size="15" fill="#78350F" text-anchor="middle">PACKED</text>
+  </g>
+
+  <!-- Subtle Sun Glow -->
+  <circle cx="1700" cy="180" r="260" fill="#FDE68A" opacity="0.35" filter="blur(50px)" />
+</svg>

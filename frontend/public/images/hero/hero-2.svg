@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E2EDF8" />
+      <stop offset="50%" stop-color="#EFF5FA" />
+      <stop offset="100%" stop-color="#F8FAFC" />
+    </linearGradient>
+    <linearGradient id="carGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#DC2626" />
+      <stop offset="100%" stop-color="#EF4444" />
+    </linearGradient>
+    <linearGradient id="carrierGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#CBD5E1" />
+    </linearGradient>
+    <filter id="shadow2" x="-5%" y="-5%" width="110%" height="115%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Crisp Daylight Sky Background -->
+  <rect width="1920" height="1080" fill="url(#bgGrad2)" />
+
+  <!-- Road & Highway -->
+  <path d="M0,780 L1920,780 L1920,1080 L0,1080 Z" fill="#1E293B" />
+  <line x1="0" y1="930" x2="1920" y2="930" stroke="#F28C28" stroke-width="8" stroke-dasharray="80,50" opacity="0.8" />
+
+  <!-- Logistics Warehouse Outline in Distance -->
+  <g opacity="0.18" fill="#64748B">
+    <polygon points="1100,780 1100,520 1350,420 1600,520 1600,780" />
+    <rect x="1300" y="580" width="100" height="200" fill="#94A3B8" />
+    <rect x="1650" y="460" width="220" height="320" />
+  </g>
+
+  <!-- Hydraulic Vehicle Carrier Fleet -->
+  <g transform="translate(1000, 480)" filter="url(#shadow2)">
+    <!-- Carrier Trailer Structure -->
+    <rect x="40" y="100" width="560" height="200" rx="8" fill="#334155" />
+    <rect x="50" y="110" width="540" height="180" rx="6" fill="#1E293B" />
+
+    <!-- Upper Deck Ramp -->
+    <line x1="60" y1="180" x2="580" y2="180" stroke="#F28C28" stroke-width="8" />
+
+    <!-- Car on Upper Deck -->
+    <g transform="translate(140, 90)">
+      <!-- Car Body -->
+      <path d="M20,60 L70,30 L170,30 L220,60 L240,75 L0,75 Z" fill="url(#carGrad)" />
+      <!-- Windows -->
+      <path d="M75,35 L120,35 L120,58 L45,58 Z" fill="#93C5FD" opacity="0.85" />
+      <path d="M128,35 L165,35 L200,58 L128,58 Z" fill="#93C5FD" opacity="0.85" />
+      <!-- Wheels -->
+      <circle cx="50" cy="75" r="16" fill="#0F172A" />
+      <circle cx="50" cy="75" r="8" fill="#E2E8F0" />
+      <circle cx="190" cy="75" r="16" fill="#0F172A" />
+      <circle cx="190" cy="75" r="8" fill="#E2E8F0" />
+    </g>
+
+    <!-- Transport SUV on Lower Deck -->
+    <g transform="translate(240, 195)">
+      <!-- SUV Body -->
+      <path d="M20,65 L60,35 L190,35 L240,65 L260,80 L0,80 Z" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2" />
+      <path d="M65,40 L120,40 L120,62 L40,62 Z" fill="#38BDF8" opacity="0.85" />
+      <path d="M128,40 L185,40 L220,62 L128,62 Z" fill="#38BDF8" opacity="0.85" />
+      <circle cx="55" cy="80" r="18" fill="#0F172A" />
+      <circle cx="55" cy="80" r="9" fill="#F28C28" />
+      <circle cx="210" cy="80" r="18" fill="#0F172A" />
+      <circle cx="210" cy="80" r="9" fill="#F28C28" />
+    </g>
+
+    <!-- Carrier Wheels -->
+    <circle cx="120" cy="330" r="42" fill="#0F172A" />
+    <circle cx="120" cy="330" r="20" fill="#CBD5E1" />
+    <circle cx="200" cy="330" r="42" fill="#0F172A" />
+    <circle cx="200" cy="330" r="20" fill="#CBD5E1" />
+    <circle cx="500" cy="330" r="42" fill="#0F172A" />
+    <circle cx="500" cy="330" r="20" fill="#CBD5E1" />
+
+    <!-- Tractor Cabin -->
+    <path d="M600,160 L660,160 L730,230 L740,320 L600,320 Z" fill="#F28C28" />
+    <path d="M620,175 L655,175 L710,230 L620,230 Z" fill="#E0F2FE" opacity="0.9" />
+    <circle cx="680" cy="330" r="42" fill="#0F172A" />
+    <circle cx="680" cy="330" r="20" fill="#CBD5E1" />
+  </g>
+
+  <!-- Professional Badge Stamp -->
+  <g transform="translate(1420, 240)">
+    <circle cx="120" cy="120" r="90" fill="#17365D" stroke="#F28C28" stroke-width="6" />
+    <text x="120" y="105" font-family="'Inter', sans-serif" font-weight="900" font-size="20" fill="#F28C28" text-anchor="middle">NATIONWIDE</text>
+    <text x="120" y="135" font-family="'Inter', sans-serif" font-weight="800" font-size="16" fill="#FFFFFF" text-anchor="middle">VEHICLE TRANSIT</text>
+    <text x="120" y="160" font-family="'Inter', sans-serif" font-weight="600" font-size="12" fill="#93C5FD" text-anchor="middle">Zero Odometer Transit</text>
+  </g>
+
+  <!-- Sun Glow -->
+  <circle cx="1720" cy="160" r="240" fill="#FDE68A" opacity="0.30" filter="blur(50px)" />
+</svg>
