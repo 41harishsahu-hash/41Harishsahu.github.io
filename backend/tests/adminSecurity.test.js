@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const jwt = require('jsonwebtoken');
 const { requireAuth, requireAdmin, generateTokens } = require('../middleware/auth');
 const User = require('../models/User');

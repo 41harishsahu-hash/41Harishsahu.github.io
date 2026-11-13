@@ -49,3 +49,4 @@ export const onImageErrorFallback = (e, type = 'gallery') => {
     e.target.src = fallback;
   }
 };
+

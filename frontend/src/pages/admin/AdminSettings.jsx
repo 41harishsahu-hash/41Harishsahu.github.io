@@ -193,7 +193,19 @@ export const AdminSettings = () => {
               Cloudinary Image Storage Status
             </h3>
 
-            {cloudinaryStatus?.isCloudinaryConfigured ? (
+            {cloudinaryStatus?.status === 'misconfigured' ? (
+              <div style={{ backgroundColor: '#FEF2F2', border: '1px solid #FECACA', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#991B1B', fontWeight: 700 }}>
+                  <AlertTriangle size={18} /> Cloudinary Misconfigured (Invalid Cloud Name)
+                </div>
+                <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.8125rem', color: '#B91C1C', lineHeight: 1.5 }}>
+                  {cloudinaryStatus.error || `Current cloud_name is invalid (${cloudinaryStatus.cloudName}).`}
+                </p>
+                <div style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: '#7F1D1D', backgroundColor: '#FEE2E2', padding: '0.5rem', borderRadius: 'var(--radius-sm)' }}>
+                  <strong>How to fix on Render:</strong> Open your Render backend service &gt; <em>Environment</em> &gt; update <code>CLOUDINARY_CLOUD_NAME</code> to your real Cloudinary cloud name (e.g. <code>historypackers</code>) or configure <code>CLOUDINARY_URL</code>.
+                </div>
+              </div>
+            ) : cloudinaryStatus?.isCloudinaryConfigured ? (
               <div style={{ backgroundColor: '#F0FDF4', border: '1px solid #BBF7D0', padding: '1rem', borderRadius: 'var(--radius-md)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#166534', fontWeight: 700 }}>
                   <CheckCircle size={18} /> Cloudinary is Connected & Operational
@@ -208,7 +220,7 @@ export const AdminSettings = () => {
                   <AlertTriangle size={18} /> Credentials Pending
                 </div>
                 <p style={{ margin: '0.5rem 0 0 0', fontSize: '0.8125rem', color: '#92400E', lineHeight: 1.5 }}>
-                  To activate live Cloudinary signed image uploads, supply your Cloudinary credentials in <code>backend/.env</code>:
+                  To activate live Cloudinary signed image uploads, supply your Cloudinary credentials in <code>backend/.env</code> or Render Environment:
                   <br />
                   <code>CLOUDINARY_CLOUD_NAME=...</code><br />
                   <code>CLOUDINARY_API_KEY=...</code><br />

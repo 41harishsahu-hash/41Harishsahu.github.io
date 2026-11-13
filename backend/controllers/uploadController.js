@@ -1,7 +1,12 @@
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
-const { isCloudinaryConfigured, uploadStream, deleteAsset } = require('../config/cloudinary');
+const {
+  isCloudinaryConfigured,
+  getCloudinaryStatus,
+  uploadStream,
+  deleteAsset,
+} = require('../config/cloudinary');
 
 // Ensure local fallback directories exist
 const LOCAL_GALLERY_DIR = path.resolve(__dirname, '../../frontend/public/images/gallery');
@@ -41,11 +46,14 @@ const upload = multer({
 });
 
 /**
- * Process a single image buffer: uploads to Cloudinary if configured,
+ * Process a single image buffer: uploads to Cloudinary if configured and valid,
+ * rejects with 400 if misconfigured (e.g. cloud_name is 'root'),
  * or saves locally to frontend/public/images/gallery if in development.
  */
 const processImageBuffer = async (buffer, originalname, mimetype, folder = 'history-packers/gallery') => {
-  if (isCloudinaryConfigured()) {
+  const cloudStatus = getCloudinaryStatus();
+
+  if (cloudStatus.isValid) {
     try {
       const result = await uploadStream(buffer, {
         folder,
@@ -65,18 +73,29 @@ const processImageBuffer = async (buffer, originalname, mimetype, folder = 'hist
         `[Upload] Cloudinary upload failed (${uploadError.message}).`
       );
       if (process.env.NODE_ENV === 'production') {
-        throw new Error(
+        const err = new Error(
           `Cloudinary image upload failed (${uploadError.message}). In production, images must be stored persistently on Cloudinary. Please ensure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are set correctly in Render environment variables.`
         );
+        err.statusCode = 502;
+        throw err;
       }
     }
-  } else if (process.env.NODE_ENV === 'production') {
-    throw new Error(
-      'Cloudinary image storage is not configured in production. Please configure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in Render environment variables.'
+  } else if (cloudStatus.status === 'misconfigured') {
+    console.error(`[Upload] Cloudinary configuration error: ${cloudStatus.error}`);
+    const err = new Error(
+      `Cloudinary configuration error: ${cloudStatus.error}`
     );
+    err.statusCode = 400;
+    throw err;
+  } else if (process.env.NODE_ENV === 'production') {
+    const err = new Error(
+      'Cloudinary image storage is not configured in production. Please configure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET (or CLOUDINARY_URL) in Render environment variables.'
+    );
+    err.statusCode = 400;
+    throw err;
   }
 
-  // Local storage fallback for local development or when Cloudinary upload fails
+  // Local storage fallback for local development
   const isHero = folder.includes('hero') || folder.includes('carousel');
   const targetDir = isHero ? LOCAL_HERO_DIR : LOCAL_GALLERY_DIR;
   const urlPrefix = isHero ? '/images/hero' : '/images/gallery';
@@ -123,6 +142,12 @@ const uploadImage = async (req, res, next) => {
       data,
     });
   } catch (err) {
+    if (err.statusCode) {
+      return res.status(err.statusCode).json({
+        success: false,
+        message: err.message,
+      });
+    }
     next(err);
   }
 };
@@ -151,6 +176,12 @@ const uploadMultipleImages = async (req, res, next) => {
       data: results,
     });
   } catch (err) {
+    if (err.statusCode) {
+      return res.status(err.statusCode).json({
+        success: false,
+        message: err.message,
+      });
+    }
     next(err);
   }
 };
@@ -199,15 +230,26 @@ const deleteImage = async (req, res, next) => {
       data: result,
     });
   } catch (err) {
+    if (err.statusCode) {
+      return res.status(err.statusCode).json({
+        success: false,
+        message: err.message,
+      });
+    }
     next(err);
   }
 };
 
 const getUploadStatus = (req, res) => {
+  const status = getCloudinaryStatus();
   res.json({
     success: true,
-    isCloudinaryConfigured: isCloudinaryConfigured(),
-    cloudName: process.env.CLOUDINARY_CLOUD_NAME ? `${process.env.CLOUDINARY_CLOUD_NAME.slice(0, 3)}***` : null,
+    isCloudinaryConfigured: status.isValid,
+    status: status.status,
+    cloudName: status.maskedCloudName,
+    source: status.source,
+    message: status.message,
+    error: status.error,
     storageFallback: 'local_storage_ready',
   });
 };
@@ -220,4 +262,3 @@ module.exports = {
   getUploadStatus,
   processImageBuffer,
 };
-

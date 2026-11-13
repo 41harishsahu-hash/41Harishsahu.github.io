@@ -1,4 +1,5 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const {
   enquirySchema,
   countWords,
@@ -13,11 +14,14 @@ const { Enquiry } = require('../models/Business');
 describe('Comprehensive Form Validation Suite — Quote & Contact Forms', () => {
   beforeAll(async () => {
     try {
-      await connectDB();
+      await Promise.race([
+        connectDB(),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('DB Connect timeout')), 3000)),
+      ]);
     } catch (e) {
       // Sandboxed test execution without loopback network access
     }
-  });
+  }, 10000);
 
   afterAll(async () => {
     try {

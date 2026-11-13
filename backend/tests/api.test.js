@@ -7,7 +7,15 @@ const {
   bookingCreateSchema,
 } = require('../validators/schemas');
 const { generateTokens, verifyAccessToken, requireAdmin } = require('../middleware/auth');
-const { isCloudinaryConfigured } = require('../config/cloudinary');
+const {
+  isCloudinaryConfigured,
+  getCloudinaryStatus,
+  resolveCredentials,
+  parseCloudinaryUrl,
+  isValidCloudName,
+  maskCloudName,
+} = require('../config/cloudinary');
+const { getUploadStatus } = require('../controllers/uploadController');
 
 // Create standard Node HTTP request/response instances for Express (runs 100% inside sandboxed environment)
 const executeRequest = (method, url, body = {}, headers = {}) => {
@@ -263,11 +271,96 @@ describe('History Packers & Movers Test Suite', () => {
     });
   });
 
-  // 4. CLOUDINARY CONFIGURATION SAFETY
+  // 4. CLOUDINARY CONFIGURATION SAFETY & CLOUD_NAME ROOT VALIDATION
   describe('Cloudinary Configuration & Safety', () => {
     it('should safely identify whether Cloudinary credentials are fully configured', () => {
       const status = isCloudinaryConfigured();
       expect(typeof status).toBe('boolean');
+    });
+
+    it('should reject known invalid / placeholder cloud names like "root", "admin", "test"', () => {
+      expect(isValidCloudName('root')).toBe(false);
+      expect(isValidCloudName('Root')).toBe(false);
+      expect(isValidCloudName('admin')).toBe(false);
+      expect(isValidCloudName('test')).toBe(false);
+      expect(isValidCloudName('undefined')).toBe(false);
+      expect(isValidCloudName('placeholder')).toBe(false);
+      expect(isValidCloudName('history-packers-backend')).toBe(false);
+      expect(isValidCloudName('ab')).toBe(false); // too short
+    });
+
+    it('should accept valid production cloud names', () => {
+      expect(isValidCloudName('HistoryPackers')).toBe(true);
+      expect(isValidCloudName('historypackers')).toBe(true);
+      expect(isValidCloudName('packers_movers_2026')).toBe(true);
+      expect(isValidCloudName('my-cloud-cdn')).toBe(true);
+    });
+
+    it('should parse CLOUDINARY_URL correctly', () => {
+      const parsed = parseCloudinaryUrl('cloudinary://123456789:mySecretKey@HistoryPackers');
+      expect(parsed).not.toBeNull();
+      expect(parsed.apiKey).toBe('123456789');
+      expect(parsed.apiSecret).toBe('mySecretKey');
+      expect(parsed.cloudName).toBe('HistoryPackers');
+    });
+
+    it('should report misconfigured and reject when cloud_name is "root"', () => {
+      const result = resolveCredentials({
+        CLOUDINARY_CLOUD_NAME: 'root',
+        CLOUDINARY_API_KEY: '233463841358439',
+        CLOUDINARY_API_SECRET: 'dummy_secret',
+      });
+      expect(result.isValid).toBe(false);
+      expect(result.status).toBe('misconfigured');
+      expect(result.error).toContain('Invalid cloud_name "root"');
+      expect(result.maskedCloudName).toBe('root (INVALID)');
+      expect(result.apiSecret).toBeNull(); // Never expose secret on error
+    });
+
+    it('should automatically recover using valid CLOUDINARY_URL if discrete cloud_name is "root"', () => {
+      const result = resolveCredentials({
+        CLOUDINARY_CLOUD_NAME: 'root',
+        CLOUDINARY_API_KEY: '233463841358439',
+        CLOUDINARY_API_SECRET: 'dummy_secret',
+        CLOUDINARY_URL: 'cloudinary://233463841358439:dummy_secret@HistoryPackers',
+      });
+      expect(result.isValid).toBe(true);
+      expect(result.status).toBe('ready');
+      expect(result.source).toBe('CLOUDINARY_URL');
+      expect(result.cloudName).toBe('HistoryPackers');
+      expect(result.maskedCloudName).toBe('His***');
+    });
+
+    it('should safely mask cloud names and protect secrets', () => {
+      expect(maskCloudName('HistoryPackers')).toBe('His***');
+      expect(maskCloudName('ab')).toBe('***');
+      expect(maskCloudName(null)).toBeNull();
+    });
+
+    it('should report unconfigured safely when environment variables are empty', () => {
+      const result = resolveCredentials({});
+      expect(result.isValid).toBe(false);
+      expect(result.status).toBe('unconfigured');
+      expect(result.maskedCloudName).toBeNull();
+    });
+
+    it('should return misconfigured status in getUploadStatus when cloud_name is "root"', () => {
+      const orig = process.env.CLOUDINARY_CLOUD_NAME;
+      process.env.CLOUDINARY_CLOUD_NAME = 'root';
+      let resJson = null;
+      const res = {
+        json: (data) => {
+          resJson = data;
+        },
+      };
+      getUploadStatus({}, res);
+      expect(resJson).not.toBeNull();
+      expect(resJson.isCloudinaryConfigured).toBe(false);
+      expect(resJson.status).toBe('misconfigured');
+      expect(resJson.cloudName).toBe('root (INVALID)');
+      expect(resJson.error).toContain('root');
+      expect(resJson.storageFallback).toBe('local_storage_ready');
+      process.env.CLOUDINARY_CLOUD_NAME = orig;
     });
   });
 });
