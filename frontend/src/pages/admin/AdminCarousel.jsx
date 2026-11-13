@@ -351,6 +351,20 @@ export const AdminCarousel = () => {
               >
                 <Cloud size={16} /> Cloudinary Active
               </span>
+            ) : uploadStatus.status === 'misconfigured' ? (
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.375rem',
+                  color: '#DC2626',
+                  fontWeight: 700,
+                  fontSize: '0.875rem',
+                }}
+                title={uploadStatus.error || 'Cloudinary Credentials Mismatch'}
+              >
+                <AlertTriangle size={16} color="#DC2626" /> Cloudinary Mismatch
+              </span>
             ) : (
               <span
                 style={{

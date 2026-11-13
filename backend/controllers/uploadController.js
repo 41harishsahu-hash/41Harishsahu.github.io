@@ -73,10 +73,17 @@ const processImageBuffer = async (buffer, originalname, mimetype, folder = 'hist
         `[Upload] Cloudinary upload failed (${uploadError.message}).`
       );
       if (process.env.NODE_ENV === 'production') {
-        const err = new Error(
-          `Cloudinary image upload failed (${uploadError.message}). In production, images must be stored persistently on Cloudinary. Please ensure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are set correctly in Render environment variables.`
-        );
-        err.statusCode = 502;
+        let errorMsg = `Cloudinary image upload failed (${uploadError.message}). In production, images must be stored persistently on Cloudinary. Please ensure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are set correctly in Render environment variables.`;
+        if (
+          uploadError.message &&
+          (uploadError.message.includes('Invalid cloud_name') ||
+            uploadError.message.includes('mismatch') ||
+            uploadError.message.includes('rejected credentials'))
+        ) {
+          errorMsg = `Cloudinary rejected cloud_name "${cloudStatus.cloudName}" (${uploadError.message}). Your API Key (233463841358439) does not belong to "${cloudStatus.cloudName}". Please log in to https://cloudinary.com/console -> copy your exact "Cloud name" (or the entire "CLOUDINARY_URL") from your dashboard -> update it in Render Environment Variables.`;
+        }
+        const err = new Error(errorMsg);
+        err.statusCode = 400;
         throw err;
       }
     }

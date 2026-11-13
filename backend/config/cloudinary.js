@@ -20,6 +20,9 @@ const BOGUS_CLOUD_NAMES = new Set([
   'sample',
 ]);
 
+// Live Cloudinary API authentication status cache
+let authVerification = null; // null | { ok: true } | { ok: false, error: string }
+
 /**
  * Safely parse a CLOUDINARY_URL format:
  * cloudinary://<api_key>:<api_secret>@<cloud_name>
@@ -124,7 +127,7 @@ const resolveCredentials = (env = process.env) => {
       apiSecret: null,
       maskedCloudName: `${discreteCloudName} (INVALID)`,
       message: `Invalid cloud_name "${discreteCloudName}". Known placeholder or invalid name detected.`,
-      error: `Invalid cloud_name "${discreteCloudName}". Please set CLOUDINARY_CLOUD_NAME in Render environment variables to your actual Cloudinary Cloud Name (e.g. "historypackers").`,
+      error: `Invalid cloud_name "${discreteCloudName}". Please set CLOUDINARY_CLOUD_NAME in Render environment variables to your actual Cloudinary Cloud Name.`,
     };
   }
 
@@ -194,12 +197,46 @@ const initCloudinarySDK = () => {
 initCloudinarySDK();
 
 /**
+ * Verify Cloudinary live credentials via ping
+ */
+const verifyCloudinaryAuth = async () => {
+  const creds = resolveCredentials();
+  if (!creds.isValid) return;
+
+  try {
+    cloudinary.config({
+      cloud_name: creds.cloudName.trim().toLowerCase(),
+      api_key: creds.apiKey,
+      api_secret: creds.apiSecret,
+      secure: true,
+    });
+    const res = await cloudinary.api.ping();
+    if (res && res.status === 'ok') {
+      authVerification = { ok: true, error: null };
+      console.log(`[Cloudinary] Successfully connected & authenticated with Cloudinary API for "${creds.maskedCloudName}".`);
+    }
+  } catch (err) {
+    const httpCode = err?.error?.http_code || err?.http_code;
+    const msg = err?.error?.message || err?.message || 'Authentication failed';
+    if (httpCode === 401 || httpCode === 400 || /mismatch|invalid/i.test(msg)) {
+      authVerification = {
+        ok: false,
+        error: `Cloudinary rejected credentials (${msg}). Your API Key (${creds.apiKey.slice(0, 4)}***) does not match cloud_name "${creds.cloudName}".`,
+      };
+      console.error(`[Cloudinary ERROR] Live API ping rejected: ${authVerification.error}`);
+    }
+  }
+};
+
+/**
  * Startup validation logger (invoked on server boot)
  */
 const validateCloudinaryOnStartup = () => {
   const status = resolveCredentials();
   if (status.status === 'ready') {
     console.log(`[Cloudinary] Validated configuration for cloud_name: "${status.maskedCloudName}" (source: ${status.source}).`);
+    // Ping Cloudinary API in background to verify auth
+    verifyCloudinaryAuth().catch(() => {});
   } else if (status.status === 'misconfigured') {
     console.error(`[Cloudinary ERROR] Configuration rejected: ${status.error}`);
     console.warn('[Cloudinary WARNING] Direct Cloudinary image uploads will be rejected until corrected in environment variables.');
@@ -207,6 +244,28 @@ const validateCloudinaryOnStartup = () => {
     console.warn('[Cloudinary NOTICE] Cloudinary credentials not configured in environment. Local storage fallback will be used in development.');
   }
   return status;
+};
+
+/**
+ * Get active Cloudinary status, factoring in live API verification if known
+ */
+const getCloudinaryStatus = () => {
+  const status = resolveCredentials();
+  if (authVerification && !authVerification.ok && status.isValid) {
+    return {
+      isCloudinaryConfigured: false,
+      status: 'misconfigured',
+      cloudName: `${status.cloudName} (MISMATCH)`,
+      source: status.source,
+      message: authVerification.error,
+      error: `${authVerification.error} Please log in to https://cloudinary.com/console, copy the exact "Cloud name" (or the entire "CLOUDINARY_URL"), and update it in Render Environment Variables.`,
+      storageFallback: 'local_storage_ready',
+    };
+  }
+  return {
+    ...status,
+    isCloudinaryConfigured: status.isValid,
+  };
 };
 
 /**
@@ -219,7 +278,14 @@ const uploadStream = (buffer, options = {}) => {
       return reject(new Error(status.error || 'Cloudinary credentials are not configured or valid.'));
     }
 
-    // Ensure SDK is configured with latest resolved credentials
+    if (authVerification && !authVerification.ok) {
+      return reject(
+        new Error(
+          `${authVerification.error} Please copy the exact Cloud Name or CLOUDINARY_URL from your Cloudinary console (https://cloudinary.com/console) and update Render environment variables.`
+        )
+      );
+    }
+
     cloudinary.config({
       cloud_name: status.cloudName.trim().toLowerCase(),
       api_key: status.apiKey,
@@ -235,7 +301,17 @@ const uploadStream = (buffer, options = {}) => {
         ...options,
       },
       (error, result) => {
-        if (error) return reject(error);
+        if (error) {
+          const errMsg = error?.error?.message || error?.message || 'Upload failed';
+          const httpCode = error?.error?.http_code || error?.http_code;
+          if (httpCode === 401 || /mismatch|invalid cloud_name/i.test(errMsg)) {
+            authVerification = {
+              ok: false,
+              error: `Cloudinary rejected credentials (${errMsg}). Your API Key (${status.apiKey.slice(0, 4)}***) does not match cloud_name "${status.cloudName}".`,
+            };
+          }
+          return reject(error);
+        }
         resolve(result);
       }
     );
@@ -265,9 +341,10 @@ const deleteAsset = async (publicId) => {
 
 module.exports = {
   cloudinary,
-  isCloudinaryConfigured: () => resolveCredentials().isValid,
-  getCloudinaryStatus: () => resolveCredentials(),
+  isCloudinaryConfigured: () => getCloudinaryStatus().isCloudinaryConfigured,
+  getCloudinaryStatus,
   validateCloudinaryOnStartup,
+  verifyCloudinaryAuth,
   resolveCredentials,
   parseCloudinaryUrl,
   isValidCloudName,
