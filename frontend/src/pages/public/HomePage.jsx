@@ -318,11 +318,11 @@ export const HomePage = () => {
                 </li>
               </ul>
 
-              <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)', display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-                <Link to="/contact" className="btn btn-navy" style={{ flex: '1 1 180px' }}>
+              <div className="highlights-btn-group">
+                <Link to="/contact" className="btn btn-navy highlights-btn">
                   Contact Jaipur Hub
                 </Link>
-                <Link to="/quote" className="btn btn-primary" style={{ flex: '1 1 180px' }}>
+                <Link to="/quote" className="btn btn-primary highlights-btn">
                   Get Free Quote
                 </Link>
               </div>

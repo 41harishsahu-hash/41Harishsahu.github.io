@@ -59,18 +59,30 @@ html {
   line-height: 1.5;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  background-color: var(--bg-primary);
+  overflow-x: clip;
 }
 
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  overflow-x: clip;
 }
 
 /* Typography */
@@ -259,6 +271,50 @@ img {
   .hero-trust-item {
     font-size: 0.6875rem;
     padding: 0.3rem 0.55rem;
+  }
+}
+
+/* ========================================================
+   KEY SERVICE HIGHLIGHTS CARD BUTTONS (RESPONSIVE)
+   Stacked 100% width on mobile/tablet, side-by-side on wide screens
+   ======================================================== */
+.highlights-btn-group {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Exactly 12px vertical spacing */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.highlights-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  min-height: 48px;
+  box-sizing: border-box;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+@media (min-width: 992px) {
+  .highlights-btn-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .highlights-btn {
+    flex: 1 1 170px;
+    width: auto;
   }
 }
 
@@ -1689,29 +1745,29 @@ select.form-control {
 }
 
 /* ========================================================
-   MOBILE HERO SECTION RESPONSIVENESS (< 768px)
+   MOBILE & TABLET HERO SECTION RESPONSIVENESS (< 768px)
    Mobile-first natural flow, zero clipping, crystal-clear contrast
    ======================================================== */
 @media (max-width: 768px) {
   .hero-section {
     display: flex;
     flex-direction: column;
-    padding: 1.5rem 0 3.5rem 0;
+    padding: 1.5rem 0 4.25rem 0;
     min-height: auto;
   }
 
   /* Responsive background image and high-contrast protective overlay */
   .hero-carousel-container img.hero-carousel-img {
     object-position: center top !important;
-    opacity: 0.38 !important;
+    opacity: 0.30 !important;
   }
 
   .hero-carousel-overlay {
     background: linear-gradient(
       180deg,
-      rgba(247, 249, 252, 0.95) 0%,
-      rgba(247, 249, 252, 0.88) 55%,
-      rgba(247, 249, 252, 0.96) 100%
+      rgba(247, 249, 252, 0.96) 0%,
+      rgba(247, 249, 252, 0.88) 50%,
+      rgba(247, 249, 252, 0.97) 100%
     ) !important;
   }
 
@@ -1747,7 +1803,7 @@ select.form-control {
     bottom: auto;
     right: auto;
     align-self: center;
-    margin: 1.15rem auto 0 auto;
+    margin: 1.15rem auto 0.75rem auto;
     padding: 0.55rem 1.15rem;
     font-size: 0.8125rem;
     background: var(--brand-navy);
@@ -1761,7 +1817,7 @@ select.form-control {
   /* Carousel Controls Bar on Mobile:
      Pinned at bottom with safe clearance below the estimate button */
   .hero-carousel-controls {
-    bottom: 0.65rem !important;
+    bottom: 0.75rem !important;
     padding: 0.3rem 0.65rem !important;
     gap: 0.5rem !important;
     background-color: rgba(23, 54, 93, 0.90) !important;
