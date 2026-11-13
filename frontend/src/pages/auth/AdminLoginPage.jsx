@@ -32,7 +32,7 @@ export const AdminLoginPage = () => {
 
   return (
     <div style={{ minHeight: 'calc(100vh - 4.5rem)', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#0B132B', padding: '2rem 1rem' }}>
-      <div className="card" style={{ maxWidth: '420px', width: '100%', padding: '2.5rem', backgroundColor: '#FFFFFF', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3)' }}>
+      <div className="auth-card" style={{ maxWidth: '420px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.3)' }}>
         <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
           <Logo height={48} />
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem', backgroundColor: 'rgba(23, 54, 93, 0.08)', color: 'var(--brand-navy)', padding: '0.25rem 0.75rem', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 700, marginTop: '1rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>

@@ -42,14 +42,14 @@ export const CustomerDashboard = () => {
       </div>
 
       {/* Real Metric Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 190px), 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
         <StatCard title="Total Enquiries" value={enquiries.length} icon={FileText} />
         <StatCard title="Pending Review" value={pendingEnquiries} icon={Clock} color="orange" />
         <StatCard title="Active Moves" value={activeBookings} icon={CalendarCheck} color="navy" />
         <StatCard title="Completed Moves" value={completedBookings} icon={CheckCircle2} />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '2rem' }}>
         {/* Recent Enquiries */}
         <div className="card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>

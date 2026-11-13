@@ -85,8 +85,8 @@ export const AdminCustomers = () => {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="card" style={{ padding: '1.25rem', marginBottom: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-        <div style={{ flex: 1, minWidth: '240px' }}>
+      <div className="card" style={{ padding: '1.25rem', marginBottom: '1.5rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <div style={{ flex: '1 1 200px', minWidth: 0 }}>
           <input
             type="text"
             className="form-control"
@@ -99,7 +99,7 @@ export const AdminCustomers = () => {
           />
         </div>
 
-        <div style={{ minWidth: '160px' }}>
+        <div style={{ flex: '1 1 140px', minWidth: 0 }}>
           <select
             className="form-control"
             value={status}

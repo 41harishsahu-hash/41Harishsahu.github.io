@@ -46,11 +46,11 @@ export const ServicesPage = () => {
 
       <section className="section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.5rem' }}>
             {displayList.map((service) => {
               const IconComp = SERVICE_ICONS[service.icon] || Truck;
               return (
-                <div key={service.slug} className="card" style={{ display: 'flex', flexDirection: 'column', padding: '2rem' }}>
+                <div key={service.slug} className="card" style={{ display: 'flex', flexDirection: 'column', padding: '1.5rem' }}>
                   <div
                     style={{
                       width: '56px',

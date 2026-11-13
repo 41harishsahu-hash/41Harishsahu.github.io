@@ -63,7 +63,7 @@ export const AdminDashboard = () => {
       </div>
 
       {/* Real Statistics Grid from Database */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1.25rem', marginBottom: '2rem' }}>
         <StatCard title="Total Customers" value={stats.totalCustomers} icon={Users} color="navy" />
         <StatCard title="Total Enquiries" value={stats.totalEnquiries} icon={FileText} />
         <StatCard title="Pending Enquiries" value={stats.pendingEnquiries} icon={Clock} color="orange" subtitle="Action needed" />
@@ -73,7 +73,7 @@ export const AdminDashboard = () => {
         <StatCard title="Cancelled Moves" value={stats.cancelledBookings} icon={AlertTriangle} subtitle="Archived" />
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '2rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))', gap: '2rem' }}>
         {/* Recent Enquiries Table */}
         <div className="card">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>

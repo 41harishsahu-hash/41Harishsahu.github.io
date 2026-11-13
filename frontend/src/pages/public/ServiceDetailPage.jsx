@@ -76,7 +76,7 @@ export const ServiceDetailPage = () => {
       {/* Main Content Layout */}
       <section className="section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'flex-start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))', gap: '2.5rem', alignItems: 'flex-start' }}>
             {/* Left Column: Details */}
             <div style={{ flex: 2 }}>
               <h2 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>Service Overview</h2>
@@ -88,7 +88,7 @@ export const ServiceDetailPage = () => {
               {service.benefits && service.benefits.length > 0 && (
                 <div style={{ marginBottom: '2.5rem' }}>
                   <h3 style={{ marginBottom: '1rem', fontSize: '1.25rem' }}>Key Benefits & Features</h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))', gap: '1rem' }}>
                     {service.benefits.map((benefit, i) => (
                       <div key={i} className="card" style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem', padding: '1rem' }}>
                         <CheckCircle size={18} color="var(--success)" style={{ flexShrink: 0, marginTop: '0.2rem' }} />

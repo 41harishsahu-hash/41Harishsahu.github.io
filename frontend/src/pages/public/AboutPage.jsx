@@ -23,7 +23,7 @@ export const AboutPage = () => {
       {/* Main Story */}
       <section className="section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '2.5rem', alignItems: 'center' }}>
             <div>
               <span className="section-subtitle">Our Background</span>
               <h2 style={{ marginBottom: '1.25rem' }}>Who We Are & What Drives Us</h2>
@@ -34,7 +34,7 @@ export const AboutPage = () => {
                 Operating from our hub in Dhawas, Jaipur, we manage local shifting within Rajasthan as well as long-distance moves across Indian metropolitan hubs. Our methodology relies on standardized multi-layer packing, trained personnel, and covered vehicles designed specifically to protect furniture, appliances, and delicate valuables.
               </p>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '1rem' }}>
                 <div style={{ borderLeft: '3px solid var(--brand-orange)', paddingLeft: '1rem' }}>
                   <h4 style={{ color: 'var(--brand-navy)', marginBottom: '0.25rem' }}>Our Mission</h4>
                   <p style={{ fontSize: '0.875rem' }}>Deliver flawless door-to-door shifting using premier materials and respectful, expert personnel.</p>
@@ -47,7 +47,7 @@ export const AboutPage = () => {
             </div>
 
             {/* Business Details Card */}
-            <div className="card" style={{ padding: '2.5rem', backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)' }}>
+            <div className="card card-responsive-pad" style={{ backgroundColor: 'var(--bg-secondary)', border: '1px solid var(--border-color)', minWidth: 0 }}>
               <h3 style={{ marginBottom: '1.25rem', color: 'var(--brand-navy)' }}>Verified Business Profile</h3>
               
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', fontSize: '0.9375rem' }}>
@@ -105,7 +105,7 @@ export const AboutPage = () => {
             <p className="section-desc">We follow systematic packing and transit standards to safeguard your possessions.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.5rem' }}>
             <div className="card">
               <Shield size={32} color="var(--brand-orange)" style={{ marginBottom: '1rem' }} />
               <h3 style={{ fontSize: '1.125rem', marginBottom: '0.5rem' }}>Quality Packing Materials</h3>

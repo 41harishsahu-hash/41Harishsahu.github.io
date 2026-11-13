@@ -188,7 +188,7 @@ export const ContactPage = () => {
 
       <section className="section" style={{ padding: '3rem 0' }}>
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2.5rem', alignItems: 'start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 290px), 1fr))', gap: '2.5rem', alignItems: 'start' }}>
             {/* Left: Contact Info & Address */}
             <div>
               <span className="section-subtitle">Reach Our Team</span>

@@ -16,7 +16,7 @@ export const Footer = () => {
             <p style={{ color: '#94A3B8', fontSize: '0.9375rem', marginBottom: '1.25rem', lineHeight: 1.6 }}>
               History Packers & Movers is your reliable partner for household shifting, vehicle transport, and corporate relocation in Jaipur, Rajasthan, and across India. Experience safe handling, professional packing, and dependable transportation.
             </p>
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
               <a
                 href="https://wa.me/919251273070?text=Hello%20History%20Packers%20and%20Movers,%20I%20would%20like%20to%20get%20a%20quotation."
                 target="_blank"
@@ -76,9 +76,9 @@ export const Footer = () => {
 
             <div className="footer-contact-item">
               <Phone size={18} color="var(--brand-orange)" style={{ flexShrink: 0 }} />
-              <div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.375rem' }}>
                 <a href="tel:+919251273070">+91 9251273070</a>
-                <span style={{ color: '#64748B', margin: '0 0.5rem' }}>|</span>
+                <span style={{ color: '#64748B' }}>|</span>
                 <a href="tel:+916375273070">+91 6375273070</a>
               </div>
             </div>
@@ -86,7 +86,7 @@ export const Footer = () => {
             <div className="footer-contact-item">
               <Mail size={18} color="var(--brand-orange)" style={{ flexShrink: 0 }} />
               <div>
-                <a href="mailto:Historypackersandmovers@gmail.com">Historypackersandmovers@gmail.com</a>
+                <a href="mailto:Historypackersandmovers@gmail.com" style={{ wordBreak: 'break-all' }}>Historypackersandmovers@gmail.com</a>
               </div>
             </div>
 

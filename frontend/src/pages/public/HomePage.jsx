@@ -136,7 +136,7 @@ export const HomePage = () => {
             </div>
 
             {/* Trust Badges */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)', maxWidth: '540px' }}>
+            <div className="hero-trust-badges">
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Shield size={20} color="var(--brand-orange)" />
                 <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>Multi-Layer Packing</span>
@@ -175,7 +175,7 @@ export const HomePage = () => {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: '1.5rem' }}>
             {(services.length > 0 ? services : defaultServices).map((service) => {
               const IconComp = SERVICE_ICONS[service.icon] || Truck;
               return (
@@ -223,7 +223,7 @@ export const HomePage = () => {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 220px), 1fr))', gap: '1.5rem' }}>
             <div className="card" style={{ textAlign: 'center', padding: '2rem 1.5rem' }}>
               <div style={{ width: '44px', height: '44px', borderRadius: '50%', backgroundColor: 'var(--brand-navy)', color: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem auto', fontWeight: 800 }}>
                 1
@@ -262,7 +262,7 @@ export const HomePage = () => {
       {/* 4. WHY CHOOSE US */}
       <section className="section">
         <div className="container">
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '3rem', alignItems: 'center' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '2.5rem', alignItems: 'center' }}>
             <div>
               <span className="section-subtitle">Why History Packers & Movers</span>
               <h2 style={{ marginBottom: '1rem' }}>Relocation Built on Care, Punctuality & Trust</h2>
@@ -297,7 +297,7 @@ export const HomePage = () => {
               </div>
             </div>
 
-            <div style={{ backgroundColor: 'var(--bg-secondary)', padding: '2.5rem', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-color)' }}>
+            <div className="card-responsive-pad" style={{ backgroundColor: 'var(--bg-secondary)', borderRadius: 'var(--radius-xl)', border: '1px solid var(--border-color)', minWidth: 0 }}>
               <h3 style={{ marginBottom: '1rem', color: 'var(--brand-navy)' }}>Key Service Highlights</h3>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 <li style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.9375rem' }}>
@@ -318,11 +318,11 @@ export const HomePage = () => {
                 </li>
               </ul>
 
-              <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)', display: 'flex', gap: '1rem' }}>
-                <Link to="/contact" className="btn btn-navy" style={{ flex: 1 }}>
+              <div style={{ marginTop: '2rem', paddingTop: '1.5rem', borderTop: '1px solid var(--border-color)', display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+                <Link to="/contact" className="btn btn-navy" style={{ flex: '1 1 180px' }}>
                   Contact Jaipur Hub
                 </Link>
-                <Link to="/quote" className="btn btn-primary" style={{ flex: 1 }}>
+                <Link to="/quote" className="btn btn-primary" style={{ flex: '1 1 180px' }}>
                   Get Free Quote
                 </Link>
               </div>
@@ -392,7 +392,7 @@ export const HomePage = () => {
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
                   gap: '1.75rem',
                   marginBottom: '2.5rem',
                 }}
@@ -516,7 +516,7 @@ export const HomePage = () => {
             <p className="section-desc">Read genuine feedback from families and businesses who relocated with History Packers & Movers.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '1.5rem' }}>
             {(testimonials.length > 0 ? testimonials : defaultTestimonials).map((t, idx) => (
               <div key={idx} className="card" style={{ display: 'flex', flexDirection: 'column' }}>
                 <div style={{ display: 'flex', gap: '0.25rem', marginBottom: '0.75rem' }}>

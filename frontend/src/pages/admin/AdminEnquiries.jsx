@@ -157,8 +157,8 @@ export const AdminEnquiries = () => {
 
       {/* Filter and Search Bar */}
       <div className="card" style={{ padding: '1.25rem', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-          <div style={{ flex: 1, minWidth: '240px', position: 'relative' }}>
+        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 200px', minWidth: 0, position: 'relative' }}>
             <input
               type="text"
               className="form-control"
@@ -171,7 +171,7 @@ export const AdminEnquiries = () => {
             />
           </div>
 
-          <div style={{ minWidth: '180px' }}>
+          <div style={{ flex: '1 1 140px', minWidth: 0 }}>
             <select
               className="form-control"
               value={status}

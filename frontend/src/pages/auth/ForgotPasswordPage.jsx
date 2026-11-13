@@ -34,7 +34,7 @@ export const ForgotPasswordPage = () => {
 
   return (
     <div style={{ minHeight: 'calc(100vh - 4.5rem)', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg-secondary)', padding: '2rem 1rem' }}>
-      <div className="card" style={{ maxWidth: '440px', width: '100%', padding: '2.5rem' }}>
+      <div className="auth-card">
         <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
           <Logo height={48} />
           <h2 style={{ fontSize: '1.375rem', marginTop: '1rem', color: 'var(--brand-navy)' }}>

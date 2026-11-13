@@ -78,7 +78,7 @@ export const Navbar = () => {
           {/* Action Buttons */}
           <div className="header-actions">
             {isAuthenticated ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+              <div className="btn-header-auth" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Link
                   to="/account"
                   className="btn btn-outline btn-sm"
@@ -98,12 +98,12 @@ export const Navbar = () => {
                 </button>
               </div>
             ) : (
-              <Link to="/login" className="btn btn-outline btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
+              <Link to="/login" className="btn btn-outline btn-sm btn-header-auth" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.375rem' }}>
                 <User size={16} /> Sign In
               </Link>
             )}
 
-            <Link to="/quote" className="btn btn-primary btn-sm">
+            <Link to="/quote" className="btn btn-primary btn-sm btn-header-quote">
               Get Free Quote <ArrowRight size={16} />
             </Link>
 
@@ -114,7 +114,7 @@ export const Navbar = () => {
               onClick={() => setMobileMenuOpen((prev) => !prev)}
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
@@ -134,13 +134,14 @@ export const Navbar = () => {
         >
           <div
             style={{
-              width: '280px',
+              width: 'min(285px, 86vw)',
               backgroundColor: '#FFFFFF',
               height: '100%',
-              padding: '1.5rem',
+              padding: '1.25rem 1rem',
               display: 'flex',
               flexDirection: 'column',
               boxShadow: 'var(--shadow-lg)',
+              boxSizing: 'border-box',
             }}
             onClick={(e) => e.stopPropagation()}
           >
