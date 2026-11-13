@@ -21,6 +21,7 @@ import {
 import { adminAPI, contentAPI } from '../../services/api';
 import { Modal, LoadingSpinner, Alert } from '../../components/CommonUI';
 import { HeroCarousel } from '../../components/HeroCarousel';
+import { getValidImageUrl, onImageErrorFallback } from '../../utils/imageHelper';
 
 export const AdminCarousel = () => {
   const [slides, setSlides] = useState([]);
@@ -566,8 +567,9 @@ export const AdminCarousel = () => {
                         }}
                       >
                         <img
-                          src={slide.imageUrl}
+                          src={getValidImageUrl(slide.imageUrl, 'hero')}
                           alt={slide.title || 'Slide'}
+                          onError={(e) => onImageErrorFallback(e, 'hero')}
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                       </div>

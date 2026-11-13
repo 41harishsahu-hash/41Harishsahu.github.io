@@ -27,6 +27,7 @@ import {
 import { contentAPI } from '../../services/api';
 import { GalleryLightbox } from '../../components/GalleryLightbox';
 import { HeroCarousel } from '../../components/HeroCarousel';
+import { getValidImageUrl, onImageErrorFallback } from '../../utils/imageHelper';
 
 const SERVICE_ICONS = {
   Home: Home,
@@ -423,9 +424,10 @@ export const HomePage = () => {
                       }}
                     >
                       <img
-                        src={item.imageUrl}
+                        src={getValidImageUrl(item.imageUrl, 'gallery')}
                         alt={item.title}
                         loading="lazy"
+                        onError={(e) => onImageErrorFallback(e, 'gallery')}
                         style={{
                           position: 'absolute',
                           top: 0,

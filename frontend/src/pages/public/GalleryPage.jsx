@@ -14,6 +14,7 @@ import {
 import { contentAPI } from '../../services/api';
 import { GalleryLightbox } from '../../components/GalleryLightbox';
 import { LoadingSpinner } from '../../components/CommonUI';
+import { getValidImageUrl, onImageErrorFallback } from '../../utils/imageHelper';
 
 const CATEGORIES = [
   'All',
@@ -189,9 +190,10 @@ export const GalleryPage = () => {
                     }}
                   >
                     <img
-                      src={item.imageUrl}
+                      src={getValidImageUrl(item.imageUrl, 'gallery')}
                       alt={item.title}
                       loading="lazy"
+                      onError={(e) => onImageErrorFallback(e, 'gallery')}
                       style={{
                         position: 'absolute',
                         top: 0,

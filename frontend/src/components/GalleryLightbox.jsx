@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { X, ChevronLeft, ChevronRight, Calendar, MapPin, Tag } from 'lucide-react';
+import { getValidImageUrl, onImageErrorFallback } from '../utils/imageHelper';
 
 export const GalleryLightbox = ({ images = [], currentIndex = 0, onClose, onNavigate }) => {
   const currentItem = images[currentIndex];
@@ -137,8 +138,9 @@ export const GalleryLightbox = ({ images = [], currentIndex = 0, onClose, onNavi
         )}
 
         <img
-          src={currentItem.imageUrl}
+          src={getValidImageUrl(currentItem.imageUrl, 'gallery')}
           alt={currentItem.title || 'Shifting Project'}
+          onError={(e) => onImageErrorFallback(e, 'gallery')}
           style={{
             maxHeight: '100%',
             maxWidth: '100%',

@@ -14,8 +14,9 @@ const runGalleryVerification = async () => {
     console.log('[Gallery Test] Connected to MongoDB.');
 
     // 1. Authenticate admin and customer
-    const admin = await User.findOne({ email: 'admin@historypackers.com', role: 'admin' });
-    if (!admin) throw new Error('Admin account not found in database.');
+    const targetEmail = (process.env.ADMIN_EMAIL || 'historypackersandmovers@gmail.com').toLowerCase().trim();
+    const admin = await User.findOne({ email: targetEmail, role: 'admin' });
+    if (!admin) throw new Error(`Admin account (${targetEmail}) not found in database.`);
     const adminToken = generateTokens(admin).accessToken;
 
     let customer = await User.findOne({ email: 'rahul.sharma@example.com', role: 'customer' });

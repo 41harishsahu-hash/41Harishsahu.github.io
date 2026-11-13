@@ -14,9 +14,10 @@ const runHeroCarouselVerification = async () => {
     console.log('[Hero Carousel Test] Connected to MongoDB.');
 
     // 1. Get tokens
-    const admin = await User.findOne({ email: 'admin@historypackers.com', role: 'admin' });
+    const targetEmail = (process.env.ADMIN_EMAIL || 'historypackersandmovers@gmail.com').toLowerCase().trim();
+    const admin = await User.findOne({ email: targetEmail, role: 'admin' });
     if (!admin) {
-      throw new Error('Admin account not found in database.');
+      throw new Error(`Admin account (${targetEmail}) not found in database.`);
     }
     const adminToken = generateTokens(admin).accessToken;
 

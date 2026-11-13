@@ -62,9 +62,18 @@ const processImageBuffer = async (buffer, originalname, mimetype, folder = 'hist
       };
     } catch (uploadError) {
       console.warn(
-        `[Upload] Cloudinary upload failed (${uploadError.message}). Safely falling back to local storage.`
+        `[Upload] Cloudinary upload failed (${uploadError.message}).`
       );
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error(
+          `Cloudinary image upload failed (${uploadError.message}). In production, images must be stored persistently on Cloudinary. Please ensure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET are set correctly in Render environment variables.`
+        );
+      }
     }
+  } else if (process.env.NODE_ENV === 'production') {
+    throw new Error(
+      'Cloudinary image storage is not configured in production. Please configure CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET in Render environment variables.'
+    );
   }
 
   // Local storage fallback for local development or when Cloudinary upload fails

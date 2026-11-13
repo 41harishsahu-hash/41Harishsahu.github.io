@@ -22,6 +22,7 @@ import {
 import { adminAPI } from '../../services/api';
 import { Modal, LoadingSpinner, Alert, Badge } from '../../components/CommonUI';
 import { GalleryLightbox } from '../../components/GalleryLightbox';
+import { getValidImageUrl, onImageErrorFallback } from '../../utils/imageHelper';
 
 const CATEGORIES = [
   'Household Shifting',
@@ -545,8 +546,9 @@ export const AdminGallery = () => {
                         title="Click to view full image"
                       >
                         <img
-                          src={item.imageUrl}
+                          src={getValidImageUrl(item.imageUrl, 'gallery')}
                           alt={item.title}
+                          onError={(e) => onImageErrorFallback(e, 'gallery')}
                           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                         />
                       </div>

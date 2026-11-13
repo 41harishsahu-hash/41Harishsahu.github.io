@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { getValidImageUrl } from '../utils/imageHelper';
 
 /**
  * Dynamic Hero Background Image Carousel
@@ -125,7 +126,7 @@ export const HeroCarousel = ({ slides = [], interval = 5000, fallbackBg = 'var(-
             aria-hidden={!isActive}
           >
             <img
-              src={slide.imageUrl}
+              src={getValidImageUrl(slide.imageUrl, 'hero')}
               alt={slide.title || 'Relocation Work Background'}
               className="hero-carousel-img"
               onError={() => handleImageError(slide.imageUrl || idx)}
