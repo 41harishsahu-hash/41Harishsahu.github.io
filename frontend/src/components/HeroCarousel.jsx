@@ -127,6 +127,7 @@ export const HeroCarousel = ({ slides = [], interval = 5000, fallbackBg = 'var(-
             <img
               src={slide.imageUrl}
               alt={slide.title || 'Relocation Work Background'}
+              className="hero-carousel-img"
               onError={() => handleImageError(slide.imageUrl || idx)}
               style={{
                 width: '100%',

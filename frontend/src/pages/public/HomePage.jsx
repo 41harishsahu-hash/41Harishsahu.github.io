@@ -115,39 +115,39 @@ export const HomePage = () => {
         {/* Dynamic Background Image Carousel */}
         <HeroCarousel slides={heroSlides} />
 
-        <div className="container" style={{ position: 'relative', zIndex: 2 }}>
-          <div style={{ maxWidth: '640px' }}>
+        <div className="container hero-container" style={{ position: 'relative', zIndex: 2 }}>
+          <div className="hero-content-wrapper" style={{ maxWidth: '640px' }}>
             <span className="section-subtitle">Jaipur Relocation Specialists</span>
-            <h1 style={{ marginBottom: '1.25rem', color: 'var(--brand-navy)' }}>
+            <h1 className="hero-heading" style={{ marginBottom: '1.25rem', color: 'var(--brand-navy)' }}>
               Moving Made Simple. <br />
               <span style={{ color: 'var(--brand-orange)' }}>Moving Made Safe.</span>
             </h1>
-            <p style={{ fontSize: '1.125rem', marginBottom: '2rem', maxWidth: '540px', lineHeight: 1.6 }}>
+            <p className="hero-description" style={{ fontSize: '1.125rem', marginBottom: '2rem', maxWidth: '540px', lineHeight: 1.6 }}>
               Reliable packing and moving solutions for your home, office and vehicle. Experience safe handling, professional packing and dependable transportation.
             </p>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.5rem' }}>
-              <Link to="/quote" className="btn btn-primary btn-lg">
+            <div className="hero-cta-row" style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginBottom: '2.5rem' }}>
+              <Link to="/quote" className="btn btn-primary btn-lg hero-btn-quote">
                 Get Free Quote <ArrowRight size={18} />
               </Link>
-              <a href="tel:+919251273070" className="btn btn-navy btn-lg">
+              <a href="tel:+919251273070" className="btn btn-navy btn-lg hero-btn-call">
                 <Phone size={18} /> Call Now
               </a>
             </div>
 
             {/* Trust Badges */}
             <div className="hero-trust-badges">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Shield size={20} color="var(--brand-orange)" />
-                <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>Multi-Layer Packing</span>
+              <div className="hero-trust-item">
+                <Shield size={18} color="var(--brand-orange)" className="hero-trust-icon" />
+                <span>Multi-Layer Packing</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Clock size={20} color="var(--brand-orange)" />
-                <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>On-Time Transit</span>
+              <div className="hero-trust-item">
+                <Clock size={18} color="var(--brand-orange)" className="hero-trust-icon" />
+                <span>On-Time Transit</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <CheckCircle size={20} color="var(--brand-orange)" />
-                <span style={{ fontSize: '0.875rem', fontWeight: 600 }}>Zero Hidden Costs</span>
+              <div className="hero-trust-item">
+                <CheckCircle size={18} color="var(--brand-orange)" className="hero-trust-icon" />
+                <span>Zero Hidden Costs</span>
               </div>
             </div>
           </div>
