@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API_BASE_URL =
   import.meta.env.VITE_API_URL ||
-  (import.meta.env.PROD ? 'https://four1harishsahu-github-io.onrender.com/api' : '/api');
+  (import.meta.env.PROD ? 'https://history-packers41.onrender.com/api' : '/api');
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -111,9 +111,9 @@ api.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes('/auth/login') &&
-      !originalRequest.url?.includes('/auth/register') &&
-      !originalRequest.url?.includes('/auth/refresh')
+      !originalRequest.url?.includes('/login') &&
+      !originalRequest.url?.includes('/register') &&
+      !originalRequest.url?.includes('/refresh')
     ) {
       if (isRefreshing) {
         // Enqueue concurrent requests while refresh is in flight

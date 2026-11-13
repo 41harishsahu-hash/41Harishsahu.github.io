@@ -24,7 +24,23 @@ export const AdminLoginPage = () => {
       await adminLogin(email, password);
       navigate('/admin/dashboard');
     } catch (err) {
-      setErrorMsg(err.response?.data?.message || err.message || 'Invalid administrator credentials.');
+      if (err.response) {
+        const status = err.response.status;
+        const serverMessage = err.response.data?.message;
+        if (status === 401) {
+          setErrorMsg(serverMessage || 'Invalid administrator credentials. Please check your email and master password.');
+        } else if (status === 403) {
+          setErrorMsg(serverMessage || 'Administrator account is deactivated. Please contact support.');
+        } else if (status >= 500) {
+          setErrorMsg(serverMessage || `Authentication server error (${status}). Please try again in a few moments.`);
+        } else {
+          setErrorMsg(serverMessage || 'Authentication failed. Please verify your credentials.');
+        }
+      } else if (err.request) {
+        setErrorMsg('Unable to reach the backend server. Please check your connection or wait while the server wakes up.');
+      } else {
+        setErrorMsg(err.message || 'An unexpected error occurred during authentication.');
+      }
     } finally {
       setLoading(false);
     }

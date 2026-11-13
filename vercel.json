@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://four1harishsahu-github-io.onrender.com/api/$1"
+      "destination": "https://history-packers41.onrender.com/api/$1"
     },
     {
       "source": "/(.*)",

@@ -1,6 +1,7 @@
 require('dotenv').config();
 const app = require('./app');
-const { connectDB } = require('./config/db');
+const { connectDB, isConnected } = require('./config/db');
+const { autoBootstrapDatabase } = require('./config/autoBootstrap');
 
 const PORT = process.env.PORT || 5000;
 
@@ -12,6 +13,13 @@ const startServer = async () => {
     await connectDB().catch((err) => {
       console.warn(`[Warning] Database initial connection failed: ${err.message}. Server will continue running.`);
     });
+
+    // Auto-bootstrap administrator and essential content safely
+    if (isConnected()) {
+      await autoBootstrapDatabase().catch((err) => {
+        console.warn(`[Auto-Bootstrap Warning] Non-fatal initialization warning: ${err.message}`);
+      });
+    }
 
     server = app.listen(PORT, () => {
       console.log(`====================================================`);
