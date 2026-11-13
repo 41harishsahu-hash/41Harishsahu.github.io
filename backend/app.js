@@ -23,12 +23,17 @@ app.use(helmet({
 }));
 
 // CORS Allowlisting
-const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+const clientUrl = process.env.CLIENT_URL || 'https://history-packers41.vercel.app';
 app.use(
   cors({
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps, curl, or same-origin)
-      if (!origin || origin === clientUrl || origin.startsWith('http://localhost:')) {
+      if (
+        !origin ||
+        origin === clientUrl ||
+        origin.endsWith('.vercel.app') ||
+        origin.startsWith('http://localhost:')
+      ) {
         return callback(null, true);
       }
       return callback(null, true); // Dev-friendly fallback
